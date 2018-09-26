@@ -1,0 +1,33 @@
+<h2>Show product</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @product.name %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @product.url %>
+  </li>
+
+  <li>
+    <strong>Ebay ID:</strong>
+    <%= @product.ebayid %>
+  </li>
+
+  <li>
+    <strong>Stock:</strong>
+    <%= @product.stock %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @product.price %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: product_path(@conn, :edit, @product) %>
+<%= link "Back", to: product_path(@conn, :index) %>

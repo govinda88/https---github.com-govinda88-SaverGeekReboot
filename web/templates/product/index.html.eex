@@ -1,0 +1,55 @@
+<h2>Walmart products (<%= length(@products)%>)</h2>
+
+<table class="table" style="vertical-align: center;">
+  <thead>
+    <tr>
+      <th style="background-color:#222222; color:white;"></th>
+      <th style="background-color:#222222; color:white;">Name</th>
+      <th style="background-color:#222222; color:white;">Views</th>
+      <th style="background-color:#222222; color:white;">E Link</th>
+      <th style="background-color:#222222; color:white;">W Link</th>
+      <th style="background-color:#222222; color:white;">E Stock</th>
+      <th style="background-color:#222222; color:white;">W Stock</th>
+      <th style="background-color:#222222; color:white;">E Price</th>
+      <th style="background-color:#222222; color:white;">W Price</th>
+      <th style="background-color:#222222; color:white;">Profit</th>
+      <th style="background-color:#222222; color:white;"># Sold</th>
+      <th style="background-color:#222222; color:white;"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for product <- @products do %>
+      <% ebay_info = SaverAdmin.Ebay.get_item(product.ebayid) %> 
+    <tr>
+      <td><img src="http://thumbs.ebaystatic.com/pict/<%=product.ebayid%>6464_1.jpg" alt="Thumbnail" height="40" >
+      <td style="vertical-align: middle;"><%= product.name %></td>
+      <td style="vertical-align: middle;"><%= ebay_info[:count] %></td>
+      <td style="vertical-align: middle;"><a target="_blank" href="<%= ebay_info[:itURL] %>"><img src="/images/ebay.png"></a></td> 
+      <td style="vertical-align: middle;"><a target="_blank" href="<%= product.url %>"><img src="/images/walmart.png"></a></td> 
+      <td style="vertical-align: middle;"><%= ebay_info[:quant]-ebay_info[:qsold] %></td> 
+      <%= if product.stock do %>
+          <td style="vertical-align: middle; background-color: green; color: white; text-align: center;">Yes</td>
+        <% else %>
+          <td style="vertical-align: middle; background-color: red; color: white; text-align: center;">No</td>
+      <% end %>
+      <td style="vertical-align: middle;">$<%= ebay_info[:price] %></td>
+      <td style="vertical-align: middle;">$<%= product.price %></td>
+	  <% percent = Float.round(((ebay_info[:price]-product.price-(ebay_info[:price]*0.07))/product.price)*100, 2) %>
+	    <%=  cond do %>
+		 <%   percent < 10 -> %>
+      <td style="vertical-align: middle; background-color: grey; color: white; text-align:center;"><%= percent %>%</td>
+	    <% percent >= 10 -> %>
+	  <td style="vertical-align: middle; background-color: blue; color: white; text-align:center;"><%= percent %>%</td>
+	    <% end %>
+      <td style="vertical-align: middle;text-align: center;"><%= ebay_info[:qsold] %></td>
+      <td class="text-right" style="vertical-align: middle;">
+        <%= link "Show", to: product_path(@conn, :show, product), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: product_path(@conn, :edit, product), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: product_path(@conn, :delete, product), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New product", to: product_path(@conn, :new) %>

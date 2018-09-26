@@ -1,47 +1,24 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# App artifacts
+/_build
+/db
+/deps
+/*.ez
 
-# Folder config file
-Desktop.ini
+# Generate on crash by the VM
+erl_crash.dump
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Static artifacts
+/node_modules
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Since we are building assets from web/static,
+# we ignore priv/static. You may want to comment
+# this depending on your deployment strategy.
+/priv/static/
 
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# The config/prod.secret.exs file by default contains sensitive
+# data and you should not commit it into version control.
+#
+# Alternatively, you may comment the line below and commit the
+# secrets file as long as you replace its contents by environment
+# variables.
+/config/prod.secret.exs

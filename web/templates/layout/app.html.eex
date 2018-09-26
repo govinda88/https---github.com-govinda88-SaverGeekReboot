@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Saver Geek</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+	<link rel="icon" href="favicon.ico">
+  </head>
+
+  <body>
+    <div class="container">
+
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <%= link "Saver Geek LLC", to: product_path(@conn, :index), class: "navbar-brand" %>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><%= link "Home", to: page_path(@conn, :index) %></li>
+            <li><%= link "Walmart", to: product_path(@conn, :index) %></li>
+            <li></li>
+          </ul>
+          <%= if @current_user do %>
+            <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", form: [class: "navbar-form navbar-right"], class: "btn btn-default" %>
+          <% else %>
+               <form class="navbar-form navbar-right">
+                 <%= link "Log in", to: session_path(@conn, :new), class: "btn btn-default" %>
+               </form>
+          <% end %>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
